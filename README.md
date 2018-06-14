@@ -2,6 +2,7 @@
 
 Client for interacting with [SSH CA Server](https://github.com/commercehub-oss/ssh-ca-server).
 
+> See [our security policy](SECURITY.md) for handling of security-related matters.
 
 ## Installation instructions
 
@@ -23,7 +24,7 @@ The first time ca-client is executed you must provide the FQDN of the CA server 
 
 ```
 $ ca-client
- 
+
 Failed to load configuration from /Users/username/.ca-client/config.json
 Enter FQDN of CA Server: ca-server.mydomain.com
 Enter name of default CA: nonproduction
@@ -33,7 +34,7 @@ Loading configuration from /Users/username/.ca-client/config.json
 Client configuration example:
 ```
 $ cat ~/.ca-client/config.json
- 
+
 {
   "DEFAULT_CA": "nonproduction",
   "BASE_URL": "https://ca-server.mydomain.com"
@@ -43,9 +44,9 @@ $ cat ~/.ca-client/config.json
 ca-client command line usage:
 ```
 usage: ca-client [-h] [-s CA | -r | -c | -k CA]
- 
+
 Tool to sign your public SSH key
- 
+
 optional arguments:
 	-h, --help           show this help message and exit
 	-s CA, --sign CA     certificate signing request
@@ -58,7 +59,7 @@ optional arguments:
 List your authorized roles:
 ```
 $ ca-client -r
- 
+
 Role:                ssh-admin-group
 Description:         Super Admin Role
 Allowed Principals:  admin
@@ -68,10 +69,10 @@ Allowed CAs:         production,nonproduction
 List available certificate authorities:
 ```
 $ ca-client -c
- 
+
 CA name:         nonproduction
 Max duration:    30d
- 
+
 CA name:         production
 Max duration:    24h
 ```
@@ -80,13 +81,13 @@ Initiate signing request for the nonproduction certificate authority:
 ```
 $ ca-client -s nonproduction
 Please enter password for username:
- 
+
 /Users/username/.ssh/nonproduction_rsa-cert.pub updated
- 
+
 Identity added: /Users/username/.ssh/nonproduction_rsa (/Users/username/.ssh/nonproduction_rsa)
 Certificate added: /Users/username/.ssh/nonproduction_rsa-cert.pub (username)
 Identity loaded for current session but ssh-agent will not persist identities on reboot
- 
+
 If using bash you can add the following command to your .bash_profile
 ssh-add /Users/username/.ssh/nonproduction_rsa
 ```
@@ -96,7 +97,7 @@ The ca-client will create a unique keypair for each of the requested certificate
 Example users .ssh folder after requesting certs from production and nonproduction certificate authority.
 ```
 $ ls ~/.ssh
- 
+
 nonproduction_rsa          nonproduction_rsa-cert.pub nonproduction_rsa.pub
 production_rsa             production_rsa-cert.pub    production_rsa.pub
 ```
@@ -104,8 +105,8 @@ production_rsa             production_rsa-cert.pub    production_rsa.pub
 The below examples shows the result of a successfully signed SSH certificate:
 
 ```
-$ ssh-keygen -L -f ~/.ssh/nonproduction_rsa-cert.pub 
- 
+$ ssh-keygen -L -f ~/.ssh/nonproduction_rsa-cert.pub
+
 ~/.ssh/nonproduction_rsa-cert.pub:
         Type: ssh-rsa-cert-v01@openssh.com user certificate
         Public key: RSA-CERT 3c:3d:47:...
@@ -113,11 +114,11 @@ $ ssh-keygen -L -f ~/.ssh/nonproduction_rsa-cert.pub
         Key ID: "username"
         Serial: 12515602213705584981
         Valid: from 2017-02-06T17:03:00 to 2017-03-08T17:04:44
-        Principals: 
+        Principals:
                 username
                 admin
         Critical Options: (none)
-        Extensions: 
+        Extensions:
                 permit-X11-forwarding
                 permit-agent-forwarding
                 permit-port-forwarding
